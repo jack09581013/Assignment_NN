@@ -5,7 +5,7 @@ import torch.nn.functional as F
 class DepthWiseConv(nn.Module):
     def __init__(self):
         super(DepthWiseConv, self).__init__()
-        self.conv = nn.Conv2d(6, 6, 3, padding=1, groups=2)
+        self.conv = nn.Conv2d(6, 6, 3, padding=1, groups=3)
         self.conv.weight = nn.Parameter(torch.randn(self.conv.weight.shape))
         self.conv.bias = nn.Parameter(torch.randn(self.conv.bias.shape))
         # self.conv.weight = nn.Parameter(torch.full(self.conv.weight.shape, 1.0))
