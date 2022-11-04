@@ -1,5 +1,5 @@
 import torch.nn
-from answer.torch_model import IRIS
+from test_ops.IRIS_model import IRIS
 from torch.optim import Adam
 import numpy as np
 from sklearn import datasets
@@ -33,7 +33,6 @@ while count < 1000:
     count += 1
 
 y = model.predict_class(X).numpy()
-print(y)
 
 print('count =', count)
 print(iris.target)

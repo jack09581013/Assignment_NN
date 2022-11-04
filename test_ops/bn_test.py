@@ -169,21 +169,27 @@ class BatchNorm1d_Simple:
         return dx, dgamma, dbeta
 
 
-# model = BatchNorm1d(2)
-model = BatchNorm1d_Simple()
+if __name__ == '__main__':
+    model = BatchNorm1d(2)
+    # model = BatchNorm1d_Simple()
 
-x = torch.FloatTensor([[1, 5], [3, 2], [5, 7]])
-y = torch.FloatTensor([[3, 7], [18, 8], [5, 2]])
-predict = None
+    x = torch.FloatTensor([[1, 5], [3, 2], [5, 7]])
+    y = torch.FloatTensor([[3, 7], [18, 8], [5, 2]])
+    predict = None
 
-for i in range(6000):
-    predict = model.forward(x)
-    loss = ((predict - y) ** 2).mean()
-    g = 2 / y.size(0) * (predict - y)
-    # model.backward_2(g)
-    model.backward(g)
-print(predict)
+    for i in range(6000):
+        predict = model.forward(x)
+        loss = ((predict - y) ** 2).mean()
+        g = 2 / y.size(0) * (predict - y)
 
-# tensor([[7.6667, 5.2895],
-#         [8.6667, 8.6842],
-#         [9.6667, 3.0263]])
+        if isinstance(model, BatchNorm1d):
+            model.backward_2(g)
+        elif isinstance(model, BatchNorm1d_Simple):
+            model.backward(g)
+        else:
+            raise NotImplementedError()
+
+    print(predict)
+    # tensor([[7.6667, 5.2895],
+    #         [8.6667, 8.6842],
+    #         [9.6667, 3.0263]])
